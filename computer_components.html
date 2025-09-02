@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Guide to Computer Components</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Teal Accent -->
+    <!-- Application Structure Plan: The SPA is designed as an interactive dashboard. A persistent sidebar navigation allows users to explore thematic categories (Processing, Memory, etc.) in any order. This non-linear approach is better for learning and reference than a fixed slideshow. The main content area updates dynamically based on user selection, showing detailed text and, where appropriate, interactive visualizations like a chart for data scale. This structure was chosen to transform passive presentation content into an active, explorable learning tool. -->
+    <!-- Visualization & Content Choices:
+        - Motherboard/Overview (Goal: Organize): The landing page explains the structure. The navigation itself acts as the organizational element.
+        - Data Scale (Goal: Compare/Inform): An interactive bar chart (Chart.js) visualizes the exponential difference between Bytes, KB, MB, GB, TB. Interaction: Users can see the dramatic scale difference. Justification: Far more impactful than a static list of numbers. Library: Chart.js.
+        - CPU Cycle, Memory Comparison, Bus Diagram (Goal: Inform/Organize): These concepts are presented using structured HTML/CSS with clear headings and lists for easy comparison and understanding, supported by the new thematic structure. Justification: Text and structure are sufficient here to convey the information clearly within the redesigned app flow.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .content-section { display: none; }
+        .content-section.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        nav a.active { background-color: #0d9488; color: white; }
+        .chart-container { position: relative; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- Sidebar Navigation -->
+        <nav id="sidebar" class="w-full md:w-64 bg-white md:border-r border-stone-200 p-4 md:p-6">
+            <h1 class="text-xl font-bold text-teal-700 mb-6">Computer Components</h1>
+            <div class="space-y-2">
+                <a href="#overview" data-section="overview" class="nav-link block font-medium text-stone-600 hover:bg-teal-50 hover:text-teal-700 rounded-lg p-3 transition-colors duration-200">The Foundation</a>
+                <a href="#processing" data-section="processing" class="nav-link block font-medium text-stone-600 hover:bg-teal-50 hover:text-teal-700 rounded-lg p-3 transition-colors duration-200">The Core (Processing)</a>
+                <a href="#memory" data-section="memory" class="nav-link block font-medium text-stone-600 hover:bg-teal-50 hover:text-teal-700 rounded-lg p-3 transition-colors duration-200">The Workspace (Memory)</a>
+                <a href="#storage" data-section="storage" class="nav-link block font-medium text-stone-600 hover:bg-teal-50 hover:text-teal-700 rounded-lg p-3 transition-colors duration-200">Storage & Graphics</a>
+                <a href="#data" data-section="data" class="nav-link block font-medium text-stone-600 hover:bg-teal-50 hover:text-teal-700 rounded-lg p-3 transition-colors duration-200">Data Representation</a>
+                <a href="#connectivity" data-section="connectivity" class="nav-link block font-medium text-stone-600 hover:bg-teal-50 hover:text-teal-700 rounded-lg p-3 transition-colors duration-200">Connectivity</a>
+                <a href="#modern" data-section="modern" class="nav-link block font-medium text-stone-600 hover:bg-teal-50 hover:text-teal-700 rounded-lg p-3 transition-colors duration-200">Modern Concepts</a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main id="main-content" class="flex-1 p-6 md:p-10">
+            <!-- Overview Section -->
+            <section id="overview" class="content-section">
+                <h2 class="text-4xl font-bold mb-4">The Foundation: The Motherboard</h2>
+                <p class="text-lg text-stone-600 mb-6">The motherboard is the main circuit board inside a computer—its central nervous system. Every single component, from the processor to your mouse, connects to it. Use the navigation to explore the key components that attach to this foundation.</p>
+                <div class="bg-white p-6 rounded-xl border border-stone-200">
+                    <h3 class="text-2xl font-bold mb-4">Key Characteristics</h3>
+                    <ul class="list-disc list-inside space-y-3 text-lg">
+                        <li>The <b>motherboard</b> is the main circuit board inside a computer's system unit.</li>
+                        <li>Think of it as the computer's central nervous system or skeleton.</li>
+                        <li><b>Every component connects to the motherboard</b>, either directly on the board or through external connectors called <b>ports</b>.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Processing Section -->
+            <section id="processing" class="content-section">
+                <h2 class="text-4xl font-bold mb-4">The Core: Central Processing Unit (CPU)</h2>
+                <p class="text-lg text-stone-600 mb-6">The processor, or CPU, is the brain of the computer. It executes program instructions and performs all the calculations that make a computer work.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-xl border border-stone-200">
+                        <h3 class="text-2xl font-bold mb-4">Performance Factors</h3>
+                        <ul class="list-disc list-inside space-y-3 text-lg">
+                            <li><strong>Cores</strong>: A CPU can contain multiple processors, called cores. A CPU with two is a dual-core, while one with many is a multi-core CPU, allowing it to handle multiple tasks at once.</li>
+                            <li><strong>Clock Speed</strong>: This measures how fast the CPU processes instructions, measured in <b>gigahertz (GHz)</b>. One GHz is one billion cycles per second.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-stone-200">
+                        <h3 class="text-2xl font-bold mb-4">Key Internal Parts</h3>
+                        <ul class="list-disc list-inside space-y-3 text-lg">
+                           <li><strong>Control Unit</strong>: Manages and coordinates most of the computer's operations, directing the flow of data.</li>
+                           <li><strong>ALU (Arithmetic Logic Unit)</strong>: Handles all mathematical calculations and logical comparisons (e.g., is X greater than Y?).</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Memory Section -->
+            <section id="memory" class="content-section">
+                <h2 class="text-4xl font-bold mb-4">The Workspace: Computer Memory</h2>
+                <p class="text-lg text-stone-600 mb-6">Memory is where the computer temporarily stores data and programs that are actively in use. Different types of memory serve different purposes, balancing speed and permanence.</p>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                     <div class="bg-white p-6 rounded-xl border border-stone-200">
+                        <h3 class="text-xl font-bold mb-2">Random Access Memory (RAM)</h3>
+                        <p>This is the computer's <b>temporary workspace</b>. Its contents are erased when the computer is shut off (volatile). PC capacities typically range from 8-16 GB.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-stone-200">
+                        <h3 class="text-xl font-bold mb-2">Cache</h3>
+                        <p>A small amount of very fast memory that stores frequently used instructions to improve processing speed. Data in cache is accessed faster than data in RAM.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-stone-200">
+                        <h3 class="text-xl font-bold mb-2">Read-Only Memory (ROM)</h3>
+                        <p>Chips containing data that <b>cannot be changed</b> (non-volatile), such as the basic instructions needed to boot up the computer (BIOS).</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-stone-200">
+                        <h3 class="text-xl font-bold mb-2">Flash Memory</h3>
+                        <p>A type of non-volatile memory that can be erased and reprogrammed, used in devices like USB flash drives and smartphone storage.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Storage & Graphics Section -->
+            <section id="storage" class="content-section">
+                <h2 class="text-4xl font-bold mb-4">Long-Term Storage & Graphics</h2>
+                <p class="text-lg text-stone-600 mb-6">These components handle saving your data permanently and displaying visual information on your screen.</p>
+                 <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-stone-200">
+                        <h3 class="text-2xl font-bold mb-2">Hard Disk Drive (HDD) / Solid-State Drive (SSD)</h3>
+                        <p class="text-lg">This is the device that contains the <b>long-term storage</b> for the operating system, programs, and your files. Data remains here even when the power is off.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-stone-200">
+                        <h3 class="text-2xl font-bold mb-2">Graphics Processing Unit (GPU)</h3>
+                        <p class="text-lg">A specialized processor that handles the complex task of rendering images, videos, and animations for display. GPUs can be integrated into a CPU or be a separate, more powerful card.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-stone-200">
+                        <h3 class="text-2xl font-bold mb-2">Sound Card</h3>
+                        <p class="text-lg">This component processes audio data and sends it to your speakers or headphones.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Representation Section -->
+            <section id="data" class="content-section">
+                <h2 class="text-4xl font-bold mb-4">How Computers Represent Data</h2>
+                <p class="text-lg text-stone-600 mb-6">All data in a computer—text, images, numbers—is stored as a series of 0s and 1s. This is called binary. This section explores the fundamental units of digital data and includes a chart to visualize their scale.</p>
+                <div class="bg-white p-6 rounded-xl border border-stone-200 mb-6">
+                    <ul class="list-disc list-inside space-y-3 text-lg">
+                         <li><strong>Bit</strong>: A single 0 or 1. The smallest unit of data.</li>
+                         <li><strong>Byte</strong>: A group of 8 bits, enough to represent one character (like 'A').</li>
+                         <li><strong>Character Coding</strong>: Systems like <b>ASCII</b> and <b>Unicode</b> are standards that translate characters into binary code.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-stone-200">
+                    <h3 class="text-2xl font-bold mb-4">Visualizing Data Scale</h3>
+                    <p class="text-stone-600 mb-4">The difference between a kilobyte and a terabyte is immense. The chart below shows how many bytes are in each unit. Notice the logarithmic scale, which is needed to display these vast differences.</p>
+                    <div class="chart-container">
+                        <canvas id="dataScaleChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Connectivity Section -->
+            <section id="connectivity" class="content-section">
+                <h2 class="text-4xl font-bold mb-4">Connectivity: Buses, Slots, and Ports</h2>
+                 <p class="text-lg text-stone-600 mb-6">Components need to communicate with each other. This is handled by a network of pathways and connectors.</p>
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-stone-200">
+                        <h3 class="text-2xl font-bold mb-2">System Bus</h3>
+                        <p class="text-lg">The electronic pathway data travels on between components. Think of it as the <b>freeway system of the motherboard</b>.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-stone-200">
+                        <h3 class="text-2xl font-bold mb-2">Expansion Slots & Cards</h3>
+                        <p class="text-lg">Slots on the motherboard that allow you to plug in <b>expansion cards</b> (like a high-end video card or sound card) to add or upgrade functionality.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-stone-200">
+                        <h3 class="text-2xl font-bold mb-2">Ports</h3>
+                        <p class="text-lg">The <b>exterior connectors</b> on your computer that allow you to plug in external devices like a mouse, keyboard, monitor, or USB drive.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Modern Concepts Section -->
+            <section id="modern" class="content-section">
+                <h2 class="text-4xl font-bold mb-4">Modern Concepts: Cloud & IoT</h2>
+                <p class="text-lg text-stone-600 mb-6">Computing now extends far beyond the physical box on your desk. These concepts define how we interact with a global network of devices and data.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-xl border border-stone-200">
+                        <h3 class="text-2xl font-bold mb-4">Internet of Things (IoT)</h3>
+                        <p class="text-lg mb-4">This refers to the vast network of everyday objects—like thermostats, watches, and security systems—that are connected to the internet to gather and share data.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-stone-200">
+                        <h3 class="text-2xl font-bold mb-4">Cloud Computing</h3>
+                        <p class="text-lg mb-4">An environment of servers that provide on-demand access to resources like programs, files, and databases across the internet.</p>
+                        <ul class="list-disc list-inside">
+                           <li><strong>Benefits</strong>: Accessibility, cost savings, and scalability.</li>
+                           <li><strong>Common Services</strong>: IaaS (Infrastructure), SaaS (Software), PaaS (Platform).</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const contentSections = document.querySelectorAll('.content-section');
+    let dataScaleChart = null;
+
+    function showSection(sectionId) {
+        let chartNeeded = false;
+        contentSections.forEach(section => {
+            if (section.id === sectionId) {
+                section.classList.add('active');
+                if (section.id === 'data') {
+                    chartNeeded = true;
+                }
+            } else {
+                section.classList.remove('active');
+            }
+        });
+
+        navLinks.forEach(link => {
+            if (link.dataset.section === sectionId) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+
+        if (chartNeeded) {
+            renderDataScaleChart();
+        }
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const sectionId = e.target.dataset.section;
+            window.location.hash = sectionId;
+            showSection(sectionId);
+        });
+    });
+
+    function renderDataScaleChart() {
+        const ctx = document.getElementById('dataScaleChart');
+        if (!ctx) return;
+        if (dataScaleChart) {
+            dataScaleChart.destroy();
+        }
+
+        const labels = ['Byte', 'Kilobyte (KB)', 'Megabyte (MB)', 'Gigabyte (GB)', 'Terabyte (TB)'];
+        const data = [
+            1,
+            1000,
+            1000000,
+            1000000000,
+            1000000000000
+        ];
+
+        dataScaleChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '# of Bytes',
+                    data: data,
+                    backgroundColor: [
+                        'rgba(13, 148, 136, 0.2)',
+                        'rgba(8, 126, 112, 0.4)',
+                        'rgba(15, 118, 110, 0.6)',
+                        'rgba(19, 78, 74, 0.8)',
+                        'rgba(13, 148, 136, 1.0)'
+                    ],
+                    borderColor: [
+                        'rgb(13, 148, 136)',
+                        'rgb(8, 126, 112)',
+                        'rgb(15, 118, 110)',
+                        'rgb(19, 78, 74)',
+                        'rgb(13, 148, 136)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        type: 'logarithmic',
+                        title: {
+                            display: true,
+                            text: 'Number of Bytes (Logarithmic Scale)'
+                        }
+                    },
+                    y: {
+                         ticks: {
+                            autoSkip: false
+                         }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.x !== null) {
+                                    label += context.parsed.x.toExponential(2);
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    const initialSection = window.location.hash ? window.location.hash.substring(1) : 'overview';
+    showSection(initialSection);
+});
+</script>
+</body>
+</html>
