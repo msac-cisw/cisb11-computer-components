@@ -1,2 +1,2 @@
 # cisb11-computer-components
-Interactive Study Guide for Computer Components
+Interactive Study Guide for Module 2 Computer Components
